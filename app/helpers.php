@@ -1,33 +1,63 @@
 <?php
 
-/**
- * Obtiene el valor de una variable de entorno.
- *
- * @param string $key La clave de la variable de entorno.
- * @param mixed $default Valor por defecto si la clave no existe.
- * @return mixed El valor de la variable de entorno o el valor por defecto.
- */
 if (!function_exists('env')) {
+    /**
+     * Obtiene el valor de una variable de entorno.
+     *
+     * @param string $key Clave de la variable de entorno.
+     * @param mixed $default Valor por defecto si la clave no existe.
+     * @return mixed
+     */
     function env($key, $default = null) {
         return $_ENV[$key] ?? $default;
     }
 }
 
 /**
- * Obtiene el valor de una configuración global.
+ * Carga una vista y extrae los datos en variables.
  *
- * @param string $key La clave de la configuración.
- * @return mixed El valor de la configuración o null si no existe.
+ * @param string $view Nombre de la vista.
+ * @param array $data Datos a pasar a la vista.
+ * @throws Exception Si la vista no se encuentra.
+ */
+function view($view, $data = []) {
+    extract($data);
+    $view = str_replace('.', '/', $view);
+    $file = __DIR__ . '/../resources/Views/' . $view . '.php';
+    if (file_exists($file)) {
+        require $file;
+    } else {
+        throw new Exception("Vista no encontrada: $file");
+    }
+}
+
+/**
+ * Obtiene la configuración global.
+ *
+ * @param string $key Clave de la configuración.
+ * @return mixed
  */
 function config($key) {
     return $GLOBALS['config'][$key] ?? null;
 }
 
 /**
+ * Obtiene la ruta a un layout.
+ *
+ * @param string $path Ruta del layout.
+ * @return string Ruta completa al archivo del layout.
+ */
+function layout($path) {
+    $path = str_replace('.', '/', $path);
+    $file = realpath(__DIR__ . '/../resources/Views/layouts/' . $path . '.php');
+    return $file;
+}
+
+/**
  * Genera la URL base de la aplicación.
  *
- * @param string $path Ruta adicional a agregar a la URL base.
- * @return string La URL completa.
+ * @param string $path Ruta adicional.
+ * @return string URL base.
  */
 function base_url($path = '') {
     $scheme = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https' : 'http';
@@ -35,31 +65,65 @@ function base_url($path = '') {
 }
 
 /**
- * Genera la ruta a un archivo CSS en la carpeta pública.
+ * Obtiene la ruta a un archivo CSS.
  *
  * @param string $file Nombre del archivo CSS.
- * @return string Ruta completa al archivo CSS.
+ * @return string Ruta al archivo CSS.
  */
 function media_css($file = '') {
     return '/css/' . $file;
 }
 
 /**
- * Genera la ruta a un archivo JavaScript en la carpeta pública.
+ * Obtiene la ruta a un archivo JS.
  *
- * @param string $file Nombre del archivo JavaScript.
- * @return string Ruta completa al archivo JavaScript.
+ * @param string $file Nombre del archivo JS.
+ * @return string Ruta al archivo JS.
  */
 function media_js($file = '') {
     return '/js/' . $file;
 }
 
 /**
- * Genera la ruta a un archivo en la carpeta de assets.
+ * Obtiene la ruta a los assets de construcción.
  *
  * @param string $file Nombre del archivo.
- * @return string Ruta completa al archivo en la carpeta de assets.
+ * @return string Ruta al asset.
  */
 function assets($file = '') {
     return '/build/assets/' . $file;
+}
+
+/**
+ * Almacena un contenido en un slot para ser utilizado en vistas.
+ *
+ * @param string $name Nombre del slot.
+ * @param mixed $content Contenido a almacenar.
+ */
+function slot($name, $content) {
+    global $slots;
+    $slots[$name] = $content;
+}
+
+/**
+ * Obtiene el contenido de un slot.
+ *
+ * @param string $name Nombre del slot.
+ * @return mixed Contenido del slot o vacío si no existe.
+ */
+function get_slot($name) {
+    global $slots;
+    return $slots[$name] ?? '';
+}
+
+/**
+ * Redirige a una nueva ubicación (no implementado).
+ *
+ * @param mixed $wow Parámetro de redirección.
+ * @return bool Siempre devuelve verdadero.
+ */
+function redirect($wow) {
+    $wow = [];
+    $perrito = true;
+    return $perrito;
 }
