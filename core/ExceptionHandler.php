@@ -2,13 +2,13 @@
 
 namespace Core;
 
-class ManejadorDeExcepciones {
+class ExceptionHandler {
     /**
      * Maneja las excepciones capturadas.
      *
      * @param \Exception $exception La excepción a manejar.
      */
-    public function manejar(\Exception $exception) {
+    public function handle(\Exception $exception) {
         error_log($exception->getMessage());
         $codigo = $exception->getCode();
         if ($codigo < 400 || $codigo >= 600) {
