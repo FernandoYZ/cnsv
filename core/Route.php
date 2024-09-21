@@ -2,31 +2,48 @@
 
 namespace Core;
 
+/*
+    |--------------------------------------------------------------------------
+    | Clase Route
+    |--------------------------------------------------------------------------
+    |
+    | Esta clase se encarga de gestionar las rutas de la aplicación, permitiendo
+    | definir rutas, establecer prefijos y nombres, y asociar middleware. Las 
+    | rutas pueden ser de diferentes métodos HTTP (GET, POST, PUT, DELETE) y
+    | también se puede crear un conjunto de rutas RESTful para un controlador.
+    |
+    | protected static $routes: Almacena las rutas registradas.
+    | protected static $prefix: Prefijo para las rutas.
+    | protected static $name: Nombre para las rutas.
+    | protected static $middleware: Middleware asociado a las rutas.
+    |
+*/
+
 class Route {
-    protected static $rutas = [];
-    protected static $prefijo = '';
-    protected static $nombre = '';
+    protected static $routes = [];
+    protected static $prefix = '';
+    protected static $name = '';
     protected static $middleware = [];
 
     /**
      * Establece un prefijo para las rutas.
      *
-     * @param string $prefijo Prefijo a establecer.
+     * @param string $prefix Prefijo a establecer.
      * @return static
      */
-    public static function prefix($prefijo) {
-        self::$prefijo = trim($prefijo, '/') . '/';
+    public static function prefix($prefix) {
+        self::$prefix = trim($prefix, '/') . '/';
         return new static;
     }
 
     /**
      * Establece un nombre para las rutas.
      *
-     * @param string $nombre Nombre a establecer.
+     * @param string $name Nombre a establecer.
      * @return static
      */
-    public static function name($nombre) {
-        self::$nombre = trim($nombre, '.') . '.';
+    public static function name($name) {
+        self::$name = trim($name, '.') . '.';
         return new static;
     }
 
@@ -54,19 +71,19 @@ class Route {
     /**
      * Agrega una ruta con un método HTTP específico.
      *
-     * @param string $metodo Método HTTP (GET, POST, etc.).
+     * @param string $method Método HTTP (GET, POST, etc.).
      * @param string $uri URI de la ruta.
      * @param mixed $handler Controlador o función que maneja la ruta.
      * @return static
      */
-    public static function add($metodo, $uri, $handler) {
-        $uri = self::$prefijo . trim($uri, '/');
-        $nombre = self::$nombre . str_replace('/', '.', $uri);
-        // $middlewares = array_map([MiddlewareHandler::class, 'resolve'], self::$middleware);
-        self::$rutas[$metodo][$uri] = [
+    public static function add($method, $uri, $handler) {
+        $uri = self::$prefix . trim($uri, '/');
+        $name = self::$name . str_replace('/', '.', $uri);
+        $middlewares = array_map([MiddlewareHandler::class, 'resolve'], self::$middleware);
+        self::$routes[$method][$uri] = [
             'handler' => $handler,
-            'nombre' => $nombre,
-            // 'middleware' => $middlewares
+            'name' => $name,
+            'middleware' => $middlewares
         ];
         return new static;
     }
@@ -119,17 +136,17 @@ class Route {
      * Crea rutas RESTful para un controlador.
      *
      * @param string $uri URI base.
-     * @param string $controlador Nombre del controlador.
+     * @param string $controller Nombre del controlador.
      */
-    public static function resource($uri, $controlador) {
-        $baseUri = self::$prefijo . trim($uri, '/');
-        self::get($baseUri, [$controlador, 'index']);
-        self::post($baseUri, [$controlador, 'store']);
-        self::get("$baseUri/create", [$controlador, 'create']);
-        self::get("$baseUri/{id}", [$controlador, 'show']);
-        self::get("$baseUri/{id}/edit", [$controlador, 'edit']);
-        self::put("$baseUri/{id}", [$controlador, 'update']);
-        self::delete("$baseUri/{id}", [$controlador, 'destroy']);
+    public static function resource($uri, $controller) {
+        $baseUri = self::$prefix . trim($uri, '/');
+        self::get($baseUri, [$controller, 'index']);
+        self::post($baseUri, [$controller, 'store']);
+        self::get("$baseUri/create", [$controller, 'create']);
+        self::get("$baseUri/{id}", [$controller, 'show']);
+        self::get("$baseUri/{id}/edit", [$controller, 'edit']);
+        self::put("$baseUri/{id}", [$controller, 'update']);
+        self::delete("$baseUri/{id}", [$controller, 'destroy']);
     }
 
     /**
@@ -138,15 +155,15 @@ class Route {
      * @return array Rutas registradas.
      */
     public static function getRoutes() {
-        return self::$rutas;
+        return self::$routes;
     }
 
     /**
      * Reinicia los valores de prefijo, nombre y middleware.
      */
     protected static function reset() {
-        self::$prefijo = '';
-        self::$nombre = '';
+        self::$prefix = '';
+        self::$name = '';
         self::$middleware = [];
     }
 }
