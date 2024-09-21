@@ -9,7 +9,7 @@ namespace Core;
  * incluyendo la carga de modelos y la gestión de respuestas.
  * 
  * @var Views $views Instancia para gestionar las vistas.
- * @var mixed $model Instancia del modelo asociado al controlador.
+ * @var mixed|null $model Instancia del modelo asociado al controlador, puede ser null.
  * @var Database $database Instancia de la base de datos.
  */
 class Controller {
@@ -26,7 +26,21 @@ class Controller {
     public function __construct(Views $views, Database $database) {
         $this->views = $views;
         $this->database = $database;
-        $this->loadModel();
+
+        if ($this->shouldLoadModel()) {
+            $this->loadModel();
+        }
+    }
+
+    /**
+     * Determina si el modelo debe ser cargado.
+     *
+     * @return bool
+     */
+    protected function shouldLoadModel() {
+        $modelClass = str_replace('App\\Http\\Controllers\\', 'App\\Models\\', get_class($this));
+        $modelClass = str_replace('Controller', '', $modelClass);
+        return class_exists($modelClass);
     }
 
     /**
