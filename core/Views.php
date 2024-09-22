@@ -5,42 +5,50 @@ namespace Core;
 /**
  * Clase Views
  *
- * Esta clase se encarga de la gestión de vistas, incluyendo la compilación,
- * la caché y la carga de layouts.
+ * Esta clase se encarga de la gestión de vistas en la aplicación, 
+ * incluyendo la compilación de archivos de vista, la gestión de caché 
+ * y la carga de layouts. Utiliza el compilador para generar el contenido
+ * de las vistas y almacena los resultados en archivos de caché para 
+ * mejorar el rendimiento.
+ *
+ * @var Compiler $compiler Instancia del compilador de vistas.
+ * @var string $cacheDir Ruta del directorio de caché para las vistas.
  */
 class Views {
     protected $compiler;
     protected $cacheDir;
 
-    /**
-     * Constructor de la clase Views.
-     * Inicializa el compilador de vistas y el directorio de caché.
-     */
     public function __construct() {
         $this->compiler = new ViewCompiler();
         $this->cacheDir = __DIR__ . '/../storage/cache/Views/';
         
-        // Crea el directorio de caché si no existe.
         if (!is_dir($this->cacheDir)) {
             mkdir($this->cacheDir, 0755, true);
         }
     }
 
     /**
-     * Obtiene y renderiza una vista específica.
+     * Obtiene y renderiza una vista específica del controlador.
      *
-     * @param string $controller Nombre del controlador.
+     * @param string $controller Nombre del controlador que contiene la vista.
      * @param string $view Nombre de la vista a renderizar.
-     * @param array $data Datos a pasar a la vista.
+     * @param array $data Datos que se pasarán a la vista.
+     *
+     * Renderiza la vista directamente si está en modo de desarrollo, 
+     * de lo contrario, utiliza la caché para mejorar el rendimiento.
      */
     public function getView($controller, $view, $data = []) {
         $viewPath = $this->getViewPath($controller, $view);
         $layoutPath = $this->getViewPath('layouts', 'main');
 
+        if (config('dev') === true) {
+            include $viewPath;
+            return;
+        }
+
         $cacheKey = md5($viewPath);
         $cacheFile = $this->cacheDir . $cacheKey . '.php';
-        $lastModified = filemtime($viewPath);
-
+        $lastModified = max(filemtime($viewPath), filemtime($layoutPath));
         if (file_exists($cacheFile) && filemtime($cacheFile) >= $lastModified) {
             include $cacheFile;
         } else {
@@ -51,7 +59,10 @@ class Views {
     }
 
     /**
-     * Limpia el caché de vistas eliminando archivos de caché.
+     * Limpia el caché de vistas eliminando todos los archivos de caché.
+     *
+     * Esto puede ser útil para forzar la regeneración de vistas
+     * después de realizar cambios en los archivos de plantilla.
      */
     public function clearCache() {
         $files = glob($this->cacheDir . '*.php');
@@ -61,11 +72,12 @@ class Views {
     }
 
     /**
-     * Obtiene la ruta de una vista dada la ruta del controlador y el nombre de la vista.
+     * Obtiene la ruta completa de una vista dada la ruta del controlador 
+     * y el nombre de la vista.
      *
      * @param string $controller Nombre del controlador.
      * @param string $view Nombre de la vista.
-     * @return string Ruta de la vista.
+     * @return string Ruta completa de la vista.
      */
     protected function getViewPath($controller, $view) {
         $controller = str_replace('App\\Http\\Controllers\\', '', $controller);
