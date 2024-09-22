@@ -21,6 +21,10 @@
         {
             "name": "DevSergioEnrique",
             "email": "devsergioenrique@gmail.com"
+        }, 
+        {
+            "name": "Saravia Reyes Arturo",
+            "email": "svrydeveloper@gmail.com"
         }
     ],
     "minimum-stability": "dev",
