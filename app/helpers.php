@@ -31,14 +31,16 @@ function view($view, $data = []) {
     }
 }
 
-/**
- * Obtiene la configuración global.
- *
- * @param string $key Clave de la configuración.
- * @return mixed
- */
-function config($key) {
-    return $GLOBALS['config'][$key] ?? null;
+if (!function_exists('config')) {
+    /**
+     * Obtiene el valor de la configuración.
+     *
+     * @param string $key Clave de la configuración.
+     * @return mixed
+     */
+    function config($key) {
+        return $GLOBALS['config'][$key] ?? null;
+    }
 }
 
 /**
