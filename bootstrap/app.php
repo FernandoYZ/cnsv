@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../app/helpers.php';
+require_once __DIR__ . '/../resources/Views/components/main.php'; 
 
 use Core\Router;
 use Core\Database;
