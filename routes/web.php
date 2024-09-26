@@ -11,5 +11,5 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/about', [AboutController::class, 'index']);
 Route::get('/admission', [AdmissionController::class, 'index']);
 Route::get('/donation', [DonationController::class, 'index']);
-Route::get('/public', [VisitController::class, 'index']);
+Route::get('/visit', [VisitController::class, 'index']);
 
