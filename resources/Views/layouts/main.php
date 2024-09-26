@@ -2,17 +2,18 @@
 <html lang="<?= config('language') ?>">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title><?= config('name') . (isset($title) && $title ? ' - ' . $title : '') ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title><?= config('name') . (isset($title) && $title ? ' | ' . $title : '') ?></title>
     <meta name="keywords" content="<?= config('keywords') ?>">
     <meta property="og:url" content="<?= config('property_url') ?>">
     <meta property="og:type" content="<?= config('property_type') ?>">
     <meta property="og:title" content="<?= config('property_title') ?>">
     <meta property="og:description" content="<?= config('property_description') ?>">
-    <meta name="description" content="<?= config('description') ?? $description ?>">
-    <meta name="author" content="<?= 'Co-authored by ' . implode(', ', array_column(config('authors'), 'fullname')) ?>">
+    <meta name="description" content="<?= $description ?? config('description') ?>">
+    <meta name="author" content="<?= implode(', ', array_column(config('authors'), 'fullname')) ?>">
 
     <link rel="stylesheet" href="<?= assets('app.css') ?>">
+    <link href="<?= media_css('main.css') ?>" rel="stylesheet">
 
     <?php if (!empty($css)) : ?>
         <?php foreach ($css as $stylesheet) : ?>
@@ -20,11 +21,11 @@
         <?php endforeach; ?>
     <?php endif; ?>
 </head>
-<body>
+<body class="font-inter">
     <?php include layout('partials.header'); ?>
-    <div class="container mt-5">
+    <main class="">
         <?= $content ?? '' ?>
-    </div>
+    </main>
     <?php include layout('partials.footer'); ?>
 
     <?php if (!empty($js)) : ?>
