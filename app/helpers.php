@@ -55,6 +55,13 @@ function layout($path) {
     return $file;
 }
 
+function display_component($path) {
+    $path = str_replace('.', '/', $path);
+    $file = realpath(__DIR__ . '/../resources/Views/components/' . $path . '.php');
+    return $file;
+
+}
+
 /**
  * Genera la URL base de la aplicación.
  *
@@ -94,6 +101,16 @@ function media_js($file = '') {
  */
 function assets($file = '') {
     return '/build/assets/' . $file;
+}
+
+/**
+ * Obtiene la ruta a la carpeta de imágenes
+ * 
+ * @param string $file Nombre del archivo.
+ * @return string Ruta a la imagen.
+ */
+function images($file = '') {
+    return base_url('/images/') . $file;
 }
 
 /**
