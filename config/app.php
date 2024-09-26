@@ -35,4 +35,5 @@ return [
             'email' => env('AUTHOR_3_EMAIL', 'email3@example.com'),
         ],
     ],
+    'company' => env('AUTHOR_COMPANY', 'Company'),
 ];
