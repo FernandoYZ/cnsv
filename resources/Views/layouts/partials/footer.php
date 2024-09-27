@@ -1,48 +1,52 @@
-<footer class="font-monserat w-full bg-neutral-900 py-8 text-white">
-    <div class="mx-auto max-w-6xl px-4 md:px-6">
-        <div class="grid grid-cols-1 p-30 justify-between items-center gap-2 md:grid-cols-2">
-            <div class="space-y-4 xs:px-4">
-                <a class="justify-left ms:justify-center flex gap-2" href="#" rel="ugc">
-                <?php
-                renderImage(
-                    'logo_cnsv', 
-                    'Logo del ' . config('property_title'), 
-                    config('description'),
-                    'w-24 text-center'
-                );
-                ?>
-                </a>
-                <p class="text-sm text-muted lg:pr-60 md:pr-16"><?= config('description') ?></p>
-            </div>
-            <div class="lg:p-0 md:p-0 px-4 py-8 flex flex-col-2 items-center justify-between gap-8">
-                <div class="space-y-4">
-                    <h4 class="text-sm font-semibold uppercase">Secciones</h4>
-                    <ul class="space-y-1">
-                        <li><a class="text-sm hover:text-white" href="<?= base_url('/') ?>" rel="ugc">Inicio</a></li>
-                        <li><a class="text-sm hover:text-white" href="<?= base_url('/about') ?>" rel="ugc">¿Quiénes somos?</a></li>
-                        <li><a class="text-sm hover:text-white" href="<?= base_url('/visit') ?>" rel="ugc">Visítanos</a></li>
-                        <li><a class="text-sm hover:text-white" href="<?= base_url('/donation') ?>" rel="ugc">Donaciones</a></li>
-                    </ul>
-                    <?php PrimaryButton('¡Inicia ya!', 'admission');?>
-                </div>
-                <div class="space-y-4">
-                    <h4 class="text-sm font-semibold uppercase">Contacto</h4>
-                    <ul class="space-y-1 mb-4">
-                        <h5 class="text-sm font-semibold">Dirección</h5>
-                        <p class="text-xs"><?= config('address') ?></p>
-                    </ul>
-                    <ul class="space-y-1 mb-4">
-                        <h5 class="text-sm font-semibold">Teléfonos</h5>
-                        <p class="text-xs"><?= config('phone') ?></p>
-                        <p class="text-xs"><?= config('phone') ?></p>
-                    </ul>
-                    <ul class="space-y-1 mb-4">
-                        <h5 class="text-sm font-semibold">Correo electrónico</h5>
-                        <p class="text-xs"><?= config('email') ?></p>
-                    </ul>
-                </div>
-            </div>
+<footer class="font-monserat bg-neutral-900 py-12 text-neutral-400 text-sm" role="contentinfo">
+  <div class="container mx-auto px-4 md:px-8 lg:px-16 xl:px-52">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <section class="flex flex-col items-center md:items-start">
+        <div class="mb-4">
+          <a href="<?= base_url('/') ?>" aria-label="Inicio">
+            <?php renderImage('logo_cnsv', 'Logo del ' . config('property_title'), config('description'), 'w-28 text-center'); ?>
+          </a>
         </div>
+        <p class="text-sm text-center md:text-left lg:pr-16 pr-0"><?= config('description') ?></p>
+      </section>
+
+      <nav class="flex justify-center" aria-label="Secciones">
+        <div>
+          <h2 class="font-bold mb-4 text-md md:text-md uppercase">Secciones</h2>
+          <ul class="space-y-2">
+            <li><a href="<?= base_url('/') ?>" class="relative hover:text-white">Inicio</a></li>
+            <li><a href="<?= base_url('/about') ?>" class="relative hover:text-white">¿Quiénes somos?</a></li>
+            <li><a href="<?= base_url('/visit') ?>" class="relative hover:text-white">Visítanos</a></li>
+            <li><a href="<?= base_url('/donation') ?>" class="relative hover:text-white">Donaciones</a></li>
+          </ul>
+          <div class="mt-6">
+            <h2 class="font-bold mb-4 text-md uppercase">Matrículas</h2>
+            <?php PrimaryButton('¡Prueba ya!', 'admission'); ?>
+          </div>
+        </div>
+      </nav>
+
+      <section class="flex flex-col items-center md:items-start text-center md:text-left" aria-labelledby="contact-heading">
+        <h2 id="contact-heading" class="font-bold mb-4 text-md md:text-md uppercase">Contacto</h2>
+        <div class="space-y-5">
+          <div>
+            <h3 class="font-semibold mb-2">Dirección</h3>
+            <p class="font-normal"><?= config('address') ?></p>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-2">Teléfono</h3>
+            <p class="font-normal"><?= config('phone') ?></p>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-2">Correo electrónico</h3>
+            <p class="font-normal">
+              <a href="<?= 'mailto:' . config('email') ?>" class="hover:text-white" rel="noopener noreferrer"><?= config('email') ?></a>
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
+  </div>
 </footer>
 <?php include layout('partials.copyright'); ?>
