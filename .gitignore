@@ -1,3 +1,5 @@
 .env
 /vendor/
 /storage/
+/public/build/assets/
+
