@@ -13,7 +13,6 @@
     <meta name="author" content="<?= implode(', ', array_column(config('authors'), 'fullname')) ?>">
 
     <link rel="stylesheet" href="<?= assets('app.css') ?>">
-    <link href="<?= media_css('main.css') ?>" rel="stylesheet">
 
     <?php if (!empty($css)) : ?>
         <?php foreach ($css as $stylesheet) : ?>
