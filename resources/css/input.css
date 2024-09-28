@@ -6,8 +6,18 @@
 @tailwind components;
 @tailwind utilities;
 
+.hovered .arrow-right {
+    transform: translateX(0.25rem);
+    transition: transform 300ms ease-in-out;
+  }
+
 .navbar {
     transition: background-color 0.3s;
+    background-color: transparent;
+}
+
+.navbar.bg-transparent {
+    background-color: transparent;
 }
 
 .navbar.scrolled {
@@ -27,7 +37,7 @@
     display: inline-block;
 }
 
-.navbar a:not([data-type="logo"])::after {
+.navbar a[data-type="item"]::after {
     content: '';
     position: absolute;
     left: 0;
