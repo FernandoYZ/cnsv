@@ -14,9 +14,10 @@ $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
 $config = require_once __DIR__ . '/../config/app.php';
+$dataConcep = require_once __DIR__ . '/../config/data.php';  
 $dbConfig = require_once __DIR__ . '/../config/database.php';
 
-$GLOBALS['config'] = array_merge($config, ['database' => $dbConfig]);
+$GLOBALS['config'] = array_merge($config, ['database' => $dbConfig], $dataConcep);
 
 $databaseConfig = $GLOBALS['config']['database'];
 
