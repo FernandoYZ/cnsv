@@ -1,9 +1,13 @@
 window.addEventListener('scroll', function() {
     const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50 && window.innerWidth > 768) {
+    if (window.scrollY > 50) {
         navbar.classList.add('scrolled');
-    } else if (window.innerWidth > 768) {
+        navbar.classList.remove('bg-transparent');
+        navbar.classList.add('bg-black');
+    } else {
         navbar.classList.remove('scrolled');
+        navbar.classList.remove('bg-black');
+        navbar.classList.add('bg-transparent');
     }
 });
 
