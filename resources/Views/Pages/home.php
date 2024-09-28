@@ -1,14 +1,22 @@
-<?=
+<?php
 HeroHome(
-    'hero/home_hero.jpg',
+    'home_hero.jpg',
     'Proceso de admisión 2024',
-    'Ir al Formulario'
-)
+    'Probar ya!',
+    'admission'
+);
+HeroSection(
+    'home_hero.jpg',
+    'Proceso de admisión 2024',
+    '',
+    'Probar ya!',
+    'admission'
+);
 ?>
+
 <section id="servicios" class="h-screen bg-gray-300 flex items-center justify-center">
     <h2 class="text-4xl">Nuestros Servicios</h2>
 </section>
-
 
 <section id="acerca" class="h-screen bg-gray-400 flex items-center justify-center">
     <h2 class="text-4xl">Acerca de Nosotros</h2>
@@ -18,8 +26,10 @@ HeroHome(
 </section>
 <?=
 HeroSection(
-    'section_bg.jpg',
+    'home_hero_donation.jpg',
     'Envíanos tu apoyo y sé parte del crecimiento de nuestra institución',
-    'Donar'
+    '',
+    'Donar',
+    'donation'
 )
 ?>
