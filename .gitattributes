@@ -3,6 +3,8 @@
 *.php diff=php
 *.lock diff=json
 *.md diff=markdown
+* text=auto
+
 
 *.php linguist-language=PHP
 *.js linguist-language=JavaScript
