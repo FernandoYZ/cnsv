@@ -1,11 +1,11 @@
+* text=auto eol=lf
+
+*.blade.php diff=html
 *.css diff=css
 *.html diff=html
-*.php diff=php
-*.lock diff=json
 *.md diff=markdown
-* text=auto
+*.php diff=php
 
-
-*.php linguist-language=PHP
-*.js linguist-language=JavaScript
-*.css linguist-language=CSS
+/.github export-ignore
+CHANGELOG.md export-ignore
+.styleci.yml export-ignore
