@@ -1,53 +1,18 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../app/helpers.php';
-require_once __DIR__ . '/../resources/Views/components/main.php'; 
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
 
-use Core\Router;
-use Core\Database;
-use Core\Views;
-use Core\ExceptionHandler;
-use Dotenv\Dotenv;
-
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
-$dotenv->load();
-
-$config = require_once __DIR__ . '/../config/app.php';
-$dataConcep = require_once __DIR__ . '/../config/data.php';  
-$dbConfig = require_once __DIR__ . '/../config/database.php';
-
-$GLOBALS['config'] = array_merge($config, ['database' => $dbConfig], $dataConcep);
-
-$databaseConfig = $GLOBALS['config']['database'];
-
-$database = new Database($databaseConfig);
-$views = new Views();
-$router = new Router($database, $views);
-$exceptionHandler = new ExceptionHandler();
-$router->setExceptionHandler($exceptionHandler);
-
-// $routes = ['web.php', 'api.php', 'auth.php'];
-// foreach ($routes as $routeFile) {
-//     require_once __DIR__ . '/../routes/' . $routeFile;
-// }
-require_once __DIR__ . '/../routes/web.php';
-
-$app = new App($GLOBALS['config'], $router, $database);
-return $app;
-
-class App {
-    protected $config;
-    protected $router;
-    protected $database;
-
-    public function __construct($config, $router, $database) {
-        $this->config = $config;
-        $this->router = $router;
-        $this->database = $database;
-    }
-
-    public function handle($request) {
-        $this->router->route($request);
-    }
-}
+return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware) {
+        //
+    })
+    ->withExceptions(function (Exceptions $exceptions) {
+        //
+    })->create();
