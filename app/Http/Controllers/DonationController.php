@@ -2,14 +2,63 @@
 
 namespace App\Http\Controllers;
 
-use Core\Controller;
+use Illuminate\Http\Request;
 
-class DonationController extends Controller {
-    public function index() {
-        $data = [
-            'title' => 'Donaciones',
-            'description' => 'Apoya al Colegio Nuestra Señora del Valle con tu donación y ayuda a fortalecer la educación integral de nuestros estudiantes.',
-        ];
-        return $this->views->getView('Pages', 'donation', $data);
+class DonationController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        return view('pages.donation');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }
