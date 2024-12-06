@@ -11,7 +11,18 @@ class DonationController extends Controller
      */
     public function index()
     {
-        return view('pages.donation');
+        $bancos = [
+            [
+                'name' => 'Cuenta BCP',
+                'account' => 'Número de cuenta',
+                'cci' => '111 111 1111 111'
+            ],[
+                'name' => 'Cuenta BBVA',
+                'account' => 'Número de cuenta',
+                'cci' => '111 111 1111 111'
+            ]
+        ];
+        return view('pages.donation', compact('bancos'));
     }
 
     /**
