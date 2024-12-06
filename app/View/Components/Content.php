@@ -10,7 +10,7 @@ class Content extends Component
 {
     public $class;
 
-    public function __construct($class)
+    public function __construct($class="")
     {
         $this->class = $class;
     }
