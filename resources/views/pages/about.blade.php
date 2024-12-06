@@ -24,7 +24,7 @@
 
     <x-content class="bg-black py-8 text-white">
         <header class="text-center justify-center py-8">
-            <h2 class="font-medium text-3xl lg:text-5xl mb-4">Nuestra Historia</h2>
+            <h2 class="font-medium text-3xl lg:text-5xl mb-4 text-wine-700">Nuestra Historia</h2>
             <p class="lg:px-48">Descubre los momentos clave que han definido al colegio Seminario Menor Nuestra Señora del Valle a lo largo de los años.</p>
         </header>
         <div class="container mx-auto p-8">
