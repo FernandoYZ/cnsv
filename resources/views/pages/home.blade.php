@@ -7,7 +7,7 @@
     />
     <x-modules.about />
     <x-modules.visit />
-    <x-modules.admission />
+    <x-modules.admission :periodos="$periodos" />
     <x-modules.donation />
     <x-modules.contact />
 
